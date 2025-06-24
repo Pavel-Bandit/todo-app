@@ -1,4 +1,5 @@
 const input = document.getElementById("taskInput");
+const deadlineInput = document.getElementById("taskDeadline");
 const button = document.getElementById("addTaskBtn");
 const list = document.getElementById("taskList");
 
@@ -97,6 +98,18 @@ function renderTask(task) {
     li.style.textDecoration = "line-through";
   }
 
+  if (task.deadline) {
+    const deadlineDate = new Date(task.deadline);
+    const now = new Date();
+    if (!task.done && deadlineDate < now) {
+      li.style.color = "red";
+    }
+
+    const deadlineSpan = document.createElement("span");
+    deadlineSpan.textContent = ` (до ${task.deadline})`;
+    li.appendChild(deadlineSpan);
+  }
+
   li.appendChild(checkbox);
   li.appendChild(span);
   li.appendChild(delBtn);
@@ -121,7 +134,8 @@ button.addEventListener("click", () => {
   const taskText = input.value.trim();
   if (taskText === "") return;
 
-  const newTask = { text: taskText, done: false };
+  const deadline = deadlineInput.value;
+  const newTask = { text: taskText, done: false, deadline };
   tasks.push(newTask);
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
