@@ -42,3 +42,43 @@ li button {
   background-color: crimson;
   padding: 5px;
 }
+
+.active-filter {
+  background-color: #007bff;
+  color: white;
+}
+
+
+.light-theme {
+  background-color: #f2f2f2;
+  color: #000;
+}
+
+.light-theme input,
+.light-theme button {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+}
+
+.light-theme li {
+  background: #eee;
+  border: none;
+}
+
+.dark-theme {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.dark-theme input,
+.dark-theme button {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #444;
+}
+
+.dark-theme li {
+  background: #1a1a1a;
+  border: 1px solid #444;
+}

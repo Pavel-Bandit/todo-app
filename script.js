@@ -14,10 +14,29 @@ window.addEventListener("DOMContentLoaded", () => {
     <button data-filter="active">Активні</button>
     <button data-filter="completed">Виконані</button>
   `;
-  document.body.insertBefore(filtersContainer, list);
+  list.parentNode.insertBefore(filtersContainer, list);
+
+  const savedTheme = localStorage.getItem("theme") || "dark-theme";
+  document.body.classList.add(savedTheme);
+
+  document.getElementById("toggleThemeBtn").addEventListener("click", () => {
+    if (document.body.classList.contains("dark-theme")) {
+      document.body.classList.remove("dark-theme");
+      document.body.classList.add("light-theme");
+      localStorage.setItem("theme", "light-theme");
+    } else {
+      document.body.classList.remove("light-theme");
+      document.body.classList.add("dark-theme");
+      localStorage.setItem("theme", "dark-theme");
+    }
+  });
 
   filtersContainer.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") {
+      // Знімаємо клас з усіх кнопок і додаємо до натиснутої
+      const buttons = filtersContainer.querySelectorAll("button");
+      buttons.forEach((btn) => btn.classList.remove("active-filter"));
+      e.target.classList.add("active-filter");
       currentFilter = e.target.dataset.filter;
       renderAllTasks();
     }
