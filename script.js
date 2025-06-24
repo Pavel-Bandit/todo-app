@@ -44,9 +44,31 @@ const createCheckbox = (task, li) => {
   return checkbox;
 };
 
-const createTextSpan = (text, done) => {
+const createTextSpan = (text, done, task) => {
   const span = document.createElement("span");
   span.textContent = text;
+
+  span.addEventListener("click", () => {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = task.text;
+
+    input.addEventListener("blur", () => {
+      task.text = input.value.trim();
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      renderAllTasks();
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        input.blur();
+      }
+    });
+
+    span.replaceWith(input);
+    input.focus();
+  });
+
   return span;
 };
 
@@ -68,7 +90,7 @@ function renderTask(task) {
   const li = document.createElement("li");
 
   const checkbox = createCheckbox(task, li);
-  const span = createTextSpan(text, done);
+  const span = createTextSpan(text, done, task);
   const delBtn = createDeleteButton(li, task);
 
   if (done) {
